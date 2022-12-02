@@ -59,7 +59,10 @@ eval(rv)
 from pyxb.exceptions_ import *
 
 import unittest
-import collections
+try:
+    from collections.abc import MutableSequence
+except ImportError:
+    from collections import MutableSequence
 
 # Pretend whoever created the schema was helpful and had normalized it
 metadatadoc_type = MetadataDocument.typeDefinition()
@@ -75,7 +78,7 @@ v_bind = pyxb.BIND('foo', lang='ENG')
 class TestTrac_0071 (unittest.TestCase):
     def testFieldConstructor (self):
         field = field_type('title', pyxb.BIND('foo', lang='ENG'), _element=field_element)
-        self.assertTrue(isinstance(field.value_, collections.MutableSequence))
+        self.assertTrue(isinstance(field.value_, MutableSequence))
         self.assertEqual(1, len(field.value_))
         self.assertTrue(isinstance(field.value_[0], value_type))
         field.validateBinding()
@@ -89,7 +92,7 @@ class TestTrac_0071 (unittest.TestCase):
 
         field = field_type(name='title', _element=field_element)
         field.value_.append(pyxb.BIND('foo', lang='ENG'))
-        self.assertTrue(isinstance(field.value_, collections.MutableSequence))
+        self.assertTrue(isinstance(field.value_, MutableSequence))
         self.assertEqual(1, len(field.value_))
         self.assertTrue(isinstance(field.value_[0], value_type))
         field.validateBinding()

@@ -59,7 +59,6 @@ eval(rv)
 from pyxb.exceptions_ import *
 
 import unittest
-import collections
 
 # Pretend whoever created the schema was helpful and had normalized it
 metadatadoc_type = MetadataDocument.typeDefinition()
